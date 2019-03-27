@@ -1,3 +1,4 @@
+// cmake . && make && ./lab2 ./D3300/img10.jpg
 #include <iostream>
 #include <vector>
 #include <opencv2/highgui.hpp>
@@ -10,9 +11,9 @@ using namespace std;
 
 int main(int argn, char** argv) {
     Mat img = imread(argv[1]); //source image
-    cv::resize(img, img, cv::Size(), 0.75, 0.75);
+    resize(img, img, cv::Size(), 0.75, 0.75);
     
-    Size patternsize(12,8); //interior number of corners
+    Size patternsize(12,8); //INTERIOR number of corners (y, x)
     vector<Point2f> corners; //this will be filled by the detected corners
 
     //CALIB_CB_FAST_CHECK saves a lot of time on images
