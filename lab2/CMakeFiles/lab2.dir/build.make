@@ -120,6 +120,8 @@ lab2: /usr/local/lib/libopencv_viz.so.4.0.1
 lab2: /usr/local/lib/libopencv_xfeatures2d.so.4.0.1
 lab2: /usr/local/lib/libopencv_xobjdetect.so.4.0.1
 lab2: /usr/local/lib/libopencv_xphoto.so.4.0.1
+lab2: /usr/lib/x86_64-linux-gnu/libboost_system.so
+lab2: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
 lab2: /usr/local/lib/libopencv_shape.so.4.0.1
 lab2: /usr/local/lib/libopencv_phase_unwrapping.so.4.0.1
 lab2: /usr/local/lib/libopencv_optflow.so.4.0.1
