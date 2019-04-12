@@ -1,0 +1,14 @@
+looking for images in D3300
+Enter number of corners along width: Enter number of corners along height: calibrateCamera return: 0.956092
+intrinsicFactor = 
+ [2658.441345136093, 0, 628.318340107941;
+ 0, 2696.16176153681, 675.7974411070029;
+ 0, 0, 1]
+
+distCoeffs = 
+ [0.0751728837575448;
+ 0.5377466183080772;
+ 0.0495591933233176;
+ 0.003661802821824925;
+ 5.7360284141114]
+

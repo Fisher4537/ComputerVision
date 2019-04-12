@@ -1,0 +1,14 @@
+looking for images in Huawei-Pietro
+Enter number of corners along width: Enter number of corners along height: calibrateCamera return: 1.65433
+intrinsicFactor = 
+ [3138.474342360498, 0, 2018.052256114683;
+ 0, 3134.989445716649, 1486.939383332469;
+ 0, 0, 1]
+
+distCoeffs = 
+ [0.3313959717673917;
+ -2.260239144343388;
+ 0.002072422310952932;
+ -0.0002389664395923063;
+ 4.281460113736424]
+
