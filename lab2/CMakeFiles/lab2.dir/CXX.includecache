@@ -23,6 +23,8 @@ opencv2/imgproc.hpp
 -
 opencv2/calib3d.hpp
 -
+opencv2/core/utils/filesystem.hpp
+-
 
 /usr/local/include/opencv4/opencv2/calib3d.hpp
 opencv2/core.hpp
@@ -349,6 +351,8 @@ functional
 -
 mutex
 -
+
+/usr/local/include/opencv4/opencv2/core/utils/filesystem.hpp
 
 /usr/local/include/opencv4/opencv2/core/version.hpp
 

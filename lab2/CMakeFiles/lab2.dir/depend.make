@@ -32,6 +32,7 @@ CMakeFiles/lab2.dir/lab2.cpp.o: /usr/local/include/opencv4/opencv2/core/traits.h
 CMakeFiles/lab2.dir/lab2.cpp.o: /usr/local/include/opencv4/opencv2/core/types.hpp
 CMakeFiles/lab2.dir/lab2.cpp.o: /usr/local/include/opencv4/opencv2/core/types_c.h
 CMakeFiles/lab2.dir/lab2.cpp.o: /usr/local/include/opencv4/opencv2/core/utility.hpp
+CMakeFiles/lab2.dir/lab2.cpp.o: /usr/local/include/opencv4/opencv2/core/utils/filesystem.hpp
 CMakeFiles/lab2.dir/lab2.cpp.o: /usr/local/include/opencv4/opencv2/core/version.hpp
 CMakeFiles/lab2.dir/lab2.cpp.o: /usr/local/include/opencv4/opencv2/core/vsx_utils.hpp
 CMakeFiles/lab2.dir/lab2.cpp.o: /usr/local/include/opencv4/opencv2/dnn.hpp

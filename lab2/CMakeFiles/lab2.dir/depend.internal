@@ -33,6 +33,7 @@ CMakeFiles/lab2.dir/lab2.cpp.o
  /usr/local/include/opencv4/opencv2/core/types.hpp
  /usr/local/include/opencv4/opencv2/core/types_c.h
  /usr/local/include/opencv4/opencv2/core/utility.hpp
+ /usr/local/include/opencv4/opencv2/core/utils/filesystem.hpp
  /usr/local/include/opencv4/opencv2/core/version.hpp
  /usr/local/include/opencv4/opencv2/core/vsx_utils.hpp
  /usr/local/include/opencv4/opencv2/dnn.hpp
