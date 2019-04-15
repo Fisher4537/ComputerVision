@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/luca/Unipd/Computer_vision/cpp/lab2/lab2.cpp
+/home/luca/Unipd/Ingegneria informatica LM-32/Computer_vision/cpp/lab2/lab2.cpp
 iostream
 -
 vector
