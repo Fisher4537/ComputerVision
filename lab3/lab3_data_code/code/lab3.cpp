@@ -1,28 +1,16 @@
-#include <stdio.h>
-#include <iostream>
 
+#include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/core.hpp>
-#include <opencv2/core/core.hpp>
-#include <opencv2/core/types_c.h>
-#include <opencv2/core/utils/filesystem.hpp>
 
 using namespace cv;
 using namespace std;
 
 void showHistogram(std::vector<cv::Mat>& );
-
-/**
- * show image with a title, can be resize.
-*/
-void show_img(Mat &img, 
-                const string TITLE="Image", 
-                const float IMG_WIDTH=1092.0,   // 80% of my screen width
-                const float IMG_HEIGHT=614.0);  // 80% of my screen height
-
+void computeHistograms(Mat &img, vector<Mat> &hists);
+void showHistAndImg(Mat &img, string title);
+void cvtAndEq(Mat &img, Mat &out, int codeConv, int invCodeConv, int chSize, vector<int> chToEq);
 
 int main(int argc, char** argv)
 {
@@ -31,38 +19,90 @@ int main(int argc, char** argv)
         throw "usage: ./lab3 <img_path>";
     }
     Mat img = cv::imread(argv[1]);  // load the image
-    vector<Mat> bgr;                // destination vector
-    split(img,bgr);                 // split source in B, G and R channel
+    
+    // show original image and histograms for each channel
+    showHistAndImg(img, "Original image and histograms");
 
-    const int channels[] = {0, 1, 2};    // channels to analize
+    // show BGR equalized image and histograms for each channel
+    vector<Mat> splitImg;
+    vector<Mat> eqSplitImg(3);
 
-    Mat b_hist, g_hist, r_hist;      // histograms
+    split(img, splitImg);
+    equalizeHist(splitImg[0], eqSplitImg[0]);
+    equalizeHist(splitImg[1], eqSplitImg[1]);
+    equalizeHist(splitImg[2], eqSplitImg[2]);
 
-    int histSize = 256;   //histograms size
+    Mat eqImg;
+    merge(eqSplitImg, eqImg);
+    showHistAndImg(eqImg, "BGR colorspace equalization");
+
+    // show Lab equalized image and histograms for each channel
+    Mat labEqImg;
+    vector<int> chToEq{0};  // equalize only channel 0 (Lightness)
+    cvtAndEq(img, labEqImg, COLOR_BGR2Lab, COLOR_Lab2BGR, 3, chToEq);
+    showHistAndImg(labEqImg, "Lab colorspace equalization");
+
+    // show HSV equalized image and histograms for each channel
+    Mat hsvEqImg;
+    vector<int> chToEq_{2};  // equalize only channel 2 (Value)
+    cvtAndEq(img, hsvEqImg, COLOR_BGR2HSV, COLOR_HSV2BGR, 3, chToEq_);
+    showHistAndImg(hsvEqImg, "HSV colorspace equalization");
+
+    return 0;
+}
+
+void cvtAndEq(Mat &img, Mat &out, int codeConv, int invCodeConv, int chSize, vector<int> chToEq) {
+    Mat cvtImg;  // color converted image
+    cvtColor(img, cvtImg, codeConv);    
+    vector<Mat> splitImg;  // splitted image
+    split(cvtImg, splitImg);
+    
+    // equalize only specified channels
+    vector<Mat> eqSplitImg(3);  // vector with eq channels
+    for (int i = 0; i < chSize; i++) 
+        if ( find(chToEq.begin(), chToEq.end(), i) != chToEq.end() )
+            equalizeHist(splitImg[i], eqSplitImg[i]);
+        else
+            eqSplitImg[i] = splitImg[i];
+    
+    Mat eqImg;  // equalized image in color converted space
+    merge(eqSplitImg, eqImg);
+    cvtColor(eqImg, out, invCodeConv);
+    
+}
+
+void showHistAndImg(Mat &img, string title="img") {
+    vector<Mat> hists;
+    computeHistograms(img, hists);
+    showHistogram(hists);
+    namedWindow(title, WINDOW_NORMAL);
+    string barTitle = "bar title";
+    int initBarValue = 10;
+    int maxBarValue = 100;
+    createTrackbar(barTitle, title, &initBarValue, maxBarValue);
+    imshow(title, img);
+    waitKey(0);
+    destroyAllWindows();
+}
+
+void computeHistograms(Mat &img, vector<Mat> &hists) {
+    vector<Mat> bgr;  // destination vector
+    split(img,bgr);  // split source in B, G and R channel
+
+    const int channels[] = {0, 1, 2};  // channels to analize
+
+    Mat b_hist, g_hist, r_hist;  // histograms
+
+    int histSize = 256;  // histograms size
 
     float range[] = {0, 256};
-    const float* ranges = {range};   // blue, green and red ranges
+    const float* ranges = {range};  // blue, green and red ranges
 
     calcHist(&bgr[0], 1, 0, Mat(), b_hist, 1, &histSize, &ranges, true, false);
     calcHist(&bgr[1], 1, 0, Mat(), g_hist, 1, &histSize, &ranges, true, false);
     calcHist(&bgr[2], 1, 0, Mat(), r_hist, 1, &histSize, &ranges, true, false);
 
-    std::vector<cv::Mat> hists{b_hist,g_hist,r_hist};
-
-    // show original image and histograms
-    showHistogram(hists);
-    namedWindow("image", WINDOW_NORMAL);
-    imshow("image", img);
-    namedWindow("blue_histogram", WINDOW_NORMAL);
-    imshow("blue_histogram", b_hist);
-    namedWindow("green_histogram", WINDOW_NORMAL);
-    imshow("green_histogram", g_hist);
-    namedWindow("red_histogram", WINDOW_NORMAL);
-    imshow("red_histogram", r_hist);
-
-    waitKey(0);
-    destroyAllWindows();
-    return 0;
+    hists = {b_hist,g_hist,r_hist};
 }
 
 // hists = vector of 3 cv::mat of size nbins=256 with the 3 histograms
@@ -102,18 +142,4 @@ void showHistogram(std::vector<cv::Mat>& hists)
 
         cv::imshow(hists.size() == 1 ? "value" : wname[i], canvas[i]);
     }
-}
-
-void show_img(Mat &img, const string TITLE, const float IMG_WIDTH, const float IMG_HEIGHT) {
-    if (IMG_WIDTH <= 0 || IMG_HEIGHT <=0 ) {
-        throw "width and height of the output images must be grater than 0";
-    }
-    const float resize_factor = min(IMG_WIDTH/img.cols, IMG_HEIGHT/img.rows);
-    Mat resized_img;
-    // debug cout<<TITLE<<" (img.cols, img.rows) = ("<<img.cols<<", "<<img.rows<<")"<<endl;
-    resize(img, resized_img, Size(), resize_factor, resize_factor);
-    namedWindow(TITLE);
-    imshow (TITLE, resized_img);
-    waitKey(0);
-    destroyWindow(TITLE);
 }
