@@ -2,61 +2,81 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
-// Generic class implementing a filter with the input and output image data and the parameters
+#ifndef FILTER
+#define FILTER
+
+/**
+ * @brief Generic class implementing a filter with the input and output
+ * image data and the parameters
+ * 
+ */
 class Filter{
 
-// Methods
+    public:
 
-public:
+        /**
+         * @brief Construct a new Filter object
+         * 
+         * @param input_img image to be filtered
+         * @param filter_size size of the kernel/window of the filter
+         */
+        Filter(cv::Mat input_img, int filter_size);
 
-    // constructor 
-    // input_img: image to be filtered
-    // filter_size : size of the kernel/window of the filter
-    Filter(cv::Mat input_img, int filter_size);
+        /**
+         * @brief perform filtering (in base class do nothing, to be 
+         * reimplemented in the derived filters)
+         * 
+         */
+        void doFilter();
 
-    // perform filtering (in base class do nothing, to be reimplemented in the derived filters)
-    void doFilter();
+        /**
+         * @brief get the output of the filter
+         * 
+         * @return cv::Mat filtered image. 
+         */
+        cv::Mat getResult();
 
-    // get the output of the filter
-    cv::Mat getResult();
+        /**
+         * @brief set the window size (square window of dimensions size x size)
+         * 
+         * @param size 
+         */
+        void setSize(int size);
+        
+        /**
+         * @brief get the Window Size
+         * 
+         * @return int 
+         */
+        int getSize();
 
-    //set the window size (square window of dimensions size x size)
-    void setSize(int size);
-    
-    //get the Window Size
-    int getSize();
+    protected:
 
-// Data
+        /**
+         * @brief input image
+         */
+        cv::Mat input_image;
 
-protected:
+        /**
+         * @brief output image (filter result)
+         */
+        cv::Mat result_image;
 
-    // input image
-    cv::Mat input_image;
-
-    // output image (filter result)
-    cv::Mat result_image;
-
-    // window size
-    int filter_size;
-
-
-
-};
-
-// Gaussian Filter
-class GaussianFilter : public Filter  {
-
-// write here your code
-
-// place constructor
-// re-implement  doFilter()
-// additional parameter: standard deviation (sigma)
+        /**
+         * @brief window size
+         */
+        int filter_size;
 
 };
 
 class MedianFilter : public Filter {
 
-// write here your code
+public: 
+    
+    MedianFilter(cv::Mat img, int size);
+
+    // perform filtering (in base class do nothing, to be reimplemented in the derived filters)
+    void doFilter();
 
 // place constructor
 // re-implement  doFilter()
@@ -64,13 +84,44 @@ class MedianFilter : public Filter {
 
 };
 
-class BilateralFilter : public Filter {
+// Gaussian Filter
+class GaussianFilter : public Filter  {
 
 // write here your code
+public:
+    GaussianFilter(cv::Mat img, int size, double std);
+
+    // perform filtering (in base class do nothing, to be reimplemented in the derived filters)
+    void doFilter();
+
+    void setSTD(double std);
+
+// place constructor
+// re-implement  doFilter()
+// additional parameter: standard deviation (sigma)
+protected:
+
+    double sigma;
+
+};
+
+
+class BilateralFilter : public Filter {
+public:
+
+    BilateralFilter(cv::Mat img, int size, double sr, double ss);
+    
+    // perform filtering (in base class do nothing, to be reimplemented in the derived filters)
+    void doFilter();
 
 // place constructor
 // re-implement  doFilter()
 // additional parameters: sigma_range, sigma_space
 
+protected:
+
+    double sigma_range, sigma_space;
 
 };
+
+#endif
