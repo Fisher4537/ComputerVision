@@ -1,3 +1,0 @@
-/home/luca/Unipd/Ingegneria informatica LM-32/Computer_vision/cpp/lab2/CMakeFiles/rebuild_cache.dir
-/home/luca/Unipd/Ingegneria informatica LM-32/Computer_vision/cpp/lab2/CMakeFiles/lab2.dir
-/home/luca/Unipd/Ingegneria informatica LM-32/Computer_vision/cpp/lab2/CMakeFiles/edit_cache.dir

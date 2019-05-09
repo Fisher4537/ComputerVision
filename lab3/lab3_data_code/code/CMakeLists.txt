@@ -1,8 +1,0 @@
-cmake_minimum_required(VERSION 2.8)
-project( DisplayImage )
-find_package( OpenCV REQUIRED)
-find_package( Boost REQUIRED COMPONENTS system filesystem)
-include_directories( ${OpenCV_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
-add_executable( lab3 lab3.cpp )
-link_directories( ${Boost_LIBRARY_DIRS})
-target_link_libraries( lab3 ${OpenCV_LIBS} ${Boost_LIBRARIES} )

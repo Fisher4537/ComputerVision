@@ -1,3 +1,0 @@
-/home/luca/Unipd/Computer_vision/cpp/lab1/CMakeFiles/rebuild_cache.dir
-/home/luca/Unipd/Computer_vision/cpp/lab1/CMakeFiles/lab1.dir
-/home/luca/Unipd/Computer_vision/cpp/lab1/CMakeFiles/edit_cache.dir
